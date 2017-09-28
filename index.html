@@ -157,7 +157,8 @@ function deviceOrientationListener(event) {
      if (totalAngle != null && totalMagnitude != null) {
 
 
-       var modTotalAngle = -1 * totalAngle * 1/180 * Math.PI - (.5 * Math.PI);
+      //  var modTotalAngle = -1 * totalAngle * 1/180 * Math.PI - (.5 * Math.PI);
+       var modTotalAngle = totalAngle;
        console.log(`modTotalAngle`, modTotalAngle);
 
        var totalX = midX + totalMagnitude * Math.cos(modTotalAngle);
