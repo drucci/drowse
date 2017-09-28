@@ -11,6 +11,7 @@ var magX = 1;
 var magY = 1;
 
 
+
 var seen = new Set()
 
 app.set('port', (process.env.PORT || 5000))
@@ -18,7 +19,8 @@ app.use(bodyParser.raw())
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
-  response.send('Hello World!' + magnitude + " direction: "+ angle);
+response.sendFile(__dirname + '/index.html')
+  //response.send('Hello World!' + magnitude + " direction: "+ angle);
 })
 
 app.get('/current', function(request, response) {
