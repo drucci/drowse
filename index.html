@@ -36,7 +36,7 @@ var prevMagnitude;
 
 function send() {
   var request = new XMLHttpRequest();
-  request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}`, true);
+  request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}&oldAngle=${prevAngle}&oldMagnitude=${prevMagnitude}`, true);
 
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
