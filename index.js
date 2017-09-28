@@ -39,6 +39,12 @@ function getCurrent() {
 }
 
 app.get('/send', function(request, response) {
+
+	request.query.oldAngle = parseFloat(request.query.oldAngle)
+	request.query.oldMagnitude  = parseFloat(request.query.oldMagnitude)
+	request.query.magnitude =  parseFloat(request.query.magnitude)
+	request.query.angle =parseFloat(request.query.angle)
+
 	if (Number.isNaN(request.query.oldAngle) 
 		|| Number.isNaN(request.query.oldMagnitude) 
 		||Number.isNaN(request.query.magnitude)
