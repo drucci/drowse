@@ -15,8 +15,13 @@ app.get('/', function(request, response) {
 })
 
 app.get('/current', function(request, response) {
-  response.send({"direction": direction, magnitude: magnitude});
+  response.send(getCurrent());
 })
+
+function getCurrent() {
+return {"direction": direction, magnitude: magnitude}
+
+}
 
 app.post('/', function(request, response) {
 	console.log(request)
@@ -32,7 +37,7 @@ app.post('/', function(request, response) {
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("new direction " + direction)
 	console.log("new magnitude " + magnitude)
-
+	response.send(getCurrent())
 })
 
 app.listen(app.get('port'), function() {
