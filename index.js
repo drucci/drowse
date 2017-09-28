@@ -32,11 +32,14 @@ function getCurrent() {
 }
 
 app.get('/send', function(request, response) {
-	if (request.query.oldAngle == undefined || request.query.oldAngle == null || request.query.oldMagnitude ==undefined || request.query.oldMagnitude == null ) {
-			response.send(getCurrent())
+	if (Number.isNaN(request.query.oldAngle) 
+		|| Number.isNaN(request.query.oldMagnitude)) {
+		
+		response.send(getCurrent());
+		return;
 	}
-
 	ident = request.query.clientId
+
 	if (!seen.has(ident)) {
 		seen.add(ident)
 		count += count
