@@ -148,8 +148,8 @@ function deviceOrientationListener(event) {
 
      if (totalAngle != null && totalMagnitude != null) {
 
-       var totalX = midX + magnitude * Math.cos(totalAngle - (.5 * Math.PI));
-       var totalY = midY + magnitude * Math.sin(totalMagnitude - (.5 * Math.PI));
+       var totalX = midX + totalMagnitude * Math.cos(totalAngle);
+       var totalY = midY + totalMagnitude * Math.sin(totalAngle);
 
 
        ctx.beginPath();
@@ -161,7 +161,7 @@ function deviceOrientationListener(event) {
 
        ctx.fillText("Distance: " + distance ,10,60);
 
-       if (distance < 60) {
+       if (distance < 40) {
          document.getElementById('parrot').style = 'display: block;'
        } else {
          document.getElementById('parrot').style = 'display: none;'
