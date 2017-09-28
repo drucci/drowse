@@ -49,13 +49,13 @@ app.get('/send', function(request, response) {
 		request.query.angle > Math.PI * 2 ||
 		request.query.angle < 0 || request.query.angle == 0) {
 		response.send(getCurrent());
-		return;
+			return;
 	}
 	ident = request.query.clientId
 	var isNew = false;
 	if (!seen.has(ident)) {
 		seen.add(ident)
-		count += 1
+		count = seen.size
 		console.log("NEW IDENTFIER, INCREASING COUNT");
 		isNew = true;
 	}
@@ -67,6 +67,7 @@ app.get('/send', function(request, response) {
 		oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
 		magX -= oldMagX
 	}
+
 	newMagY =  (request.query.magnitude * Math.sin(request.query.angle)) / count;
 	magY += newMagY
 
