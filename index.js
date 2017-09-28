@@ -9,9 +9,6 @@ var angle = 1;
 var count = 1;
 var magX = 1;
 var magY = 1;
-
-
-
 var seen = new Set()
 
 app.set('port', (process.env.PORT || 5000))
@@ -58,7 +55,7 @@ app.get('/send', function(request, response) {
 
 	if (!seen.has(ident)) {
 		seen.add(ident)
-		count += count
+		count += 1
 		console.log("NEW IDENTFIER, INCREASING COUNT")
 	}
 
