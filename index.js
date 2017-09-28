@@ -57,7 +57,9 @@ app.get('/send', function(request, response) {
 
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.angle)
-	console.log("inputed magnitude " + request.query.magnitude)
+	console.log("inputed Old magnitude " + request.query.oldMagnitude)
+	console.log("inputed Old magnitude " + request.query.oldAngle)
+
 	console.log("new direction " + angle)
 	console.log("new magnitude " + magnitude)
 	response.send(getCurrent())
