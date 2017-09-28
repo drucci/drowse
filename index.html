@@ -148,8 +148,8 @@ function deviceOrientationListener(event) {
 
      if (totalAngle != null && totalMagnitude != null) {
 
-       var totalX = midX + magnitude * Math.cos(totalAngle - (.5 * Math.PI));
-       var totalY = midY + magnitude * Math.sin(totalMagnitude - (.5 * Math.PI));
+       var totalX = midX + totalMagnitude * Math.cos(totalAngle);
+       var totalY = midY + totalMagnitude * Math.sin(totalAngle);
 
 
        ctx.beginPath();
