@@ -32,7 +32,6 @@ function getCurrent() {
 }
 
 app.get('/send', function(request, response) {
-	console.log(request)
 	if (request.query.oldAngle == undefined || request.query.oldAngle == null || request.query.oldMagnitude ==undefined || request.query.oldMagnitude == null ) {
 			response.send(getCurrent())
 	}
