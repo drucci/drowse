@@ -46,7 +46,7 @@ var totalAngle;
 function send() {
   var request = new XMLHttpRequest();
 
-  request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}&oldAngle=${prevAngle}&oldMagnitude=${prevMagnitude}`, true);
+  request.open('GET', `//spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}&oldAngle=${prevAngle}&oldMagnitude=${prevMagnitude}`, true);
 
   prevMagnitude = globalMagnitudeToSend;
   prevAngle = globalAngleToSend;
