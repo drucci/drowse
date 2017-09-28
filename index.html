@@ -133,9 +133,6 @@ function deviceOrientationListener(event) {
      var toX = midX + magnitude * Math.cos(angle);
      var toY = midY + magnitude * Math.sin(angle);
 
-     var totalX = midX + magnitude * Math.cos(angle - (.5 * Math.PI));
-     var totalY = midY + magnitude * Math.sin(angle - (.5 * Math.PI));
-
 
     //  ctx.lineTo(210, 75);
     //  ctx.lineTo(toX, toY);
@@ -145,21 +142,26 @@ function deviceOrientationListener(event) {
      canvasArrow(ctx, midX, midY, toX, toY, magnitude);
      ctx.stroke();
 
-     ctx.beginPath();
-     ctx.strokeStyle="#cccc";
-     canvasArrow(ctx, midX, midY, totalX, totalY);
-     ctx.stroke();
+     if (totalAngle != null && totalMagnitude != null) {
 
-    //  ctx.arc(180,75,60,0, event.alpha*Math.PI/180);
+       var totalX = midX + magnitude * Math.cos(totalAngle - (.5 * Math.PI));
+       var totalY = midY + magnitude * Math.sin(totalMagnitude - (.5 * Math.PI));
 
-    var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
 
-     ctx.fillText("Distance:" + distance ,10,20);
+       ctx.beginPath();
+       ctx.strokeStyle="#cccc";
+       canvasArrow(ctx, midX, midY, totalX, totalY);
+       ctx.stroke();
 
-     if (distance < 60) {
-       document.getElementById('parrot').style = 'display: block;'
-     } else {
-       document.getElementById('parrot').style = 'display: none;'
+      var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
+
+       ctx.fillText("Distance:" + distance ,10,20);
+
+       if (distance < 60) {
+         document.getElementById('parrot').style = 'display: block;'
+       } else {
+         document.getElementById('parrot').style = 'display: none;'
+       }
      }
 
 
