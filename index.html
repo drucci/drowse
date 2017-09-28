@@ -39,7 +39,12 @@ var totalAngle;
 
 function send() {
   var request = new XMLHttpRequest();
+
   request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}&oldAngle=${prevAngle}&oldMagnitude=${prevMagnitude}`, true);
+
+  prevMagnitude = globalMagnitudeToSend;
+  prevAngle = globalAngleToSend;
+
 
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
@@ -73,7 +78,7 @@ function send() {
 setInterval(function() {
   // (`http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}`);
   send();
-}, 3000);
+}, 1000);
 
 function distanceBetween(x1, y1, x2, y2) {
   var a = x1 - x2;
@@ -120,13 +125,11 @@ function deviceOrientationListener(event) {
      magnitude = Math.max(40, magnitude);
      magnitude = Math.min(180, magnitude);
 
-     prevMagnitude = globalMagnitudeToSend;
      globalMagnitudeToSend = magnitude;
 
 
      var angle = -1 * event.alpha * 1/180 * Math.PI - (.5 * Math.PI);
      var sourceRadians = event.alpha * 1/180 * Math.PI;
-     prevAngle = globalAngleToSend;
      globalAngleToSend = sourceRadians;
     //  console.log(`event.alpha`, event.alpha);
     //  console.log(`angle`, angle);
