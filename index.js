@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 
 var app = express()
 
-var mag = 0;
+var magnitude = 0;
 var direction = 0;
 
 app.set('port', (process.env.PORT || 5000))
@@ -11,7 +11,7 @@ app.use(bodyParser.raw())
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
-  response.send('Hello World!' + mag + " direction: "+ direction);
+  response.send('Hello World!' + magnitude + " direction: "+ direction);
 })
 
 app.get('/current', function(request, response) {
@@ -22,16 +22,16 @@ app.post('/', function(request, response) {
 	console.log(request)
 
 	direction = direction - parseInt(request.query.oldDirection)
-	mag = mag - parseInt(request.query.oldMag)
+	magnitude = magnitude - parseInt(request.query.oldMag)
 	
 	direction = direction + parseInt(request.query.direction)
-	mag = mag + parseInt(request.query.mag)
+	magnitude = magnitude + parseInt(request.query.magnitude)
 
-	console.log("inputed magnitude " + request.query.mag)
+	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.direction)
-	console.log("inputed magnitude " + request.query.mag)
+	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("new direction " + direction)
-	console.log("new magnitude " + mag)
+	console.log("new magnitude " + magnitude)
 
 })
 
