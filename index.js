@@ -47,7 +47,7 @@ app.get('/send', function(request, response) {
 		||Number.isNaN(request.query.magnitude)
 		|| Number.isNaN(request.query.angle) ||
 		request.query.angle > Math.PI * 2 ||
-		request.query.angle < 0) {
+		request.query.angle < 0 || request.query.angle == 0) {
 		response.send(getCurrent());
 		return;
 	}
