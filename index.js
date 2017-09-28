@@ -66,7 +66,8 @@ app.get('/send', function(request, response) {
 
 
 	magnitude = Math.sqrt(Math.pow(magX,2) + Math.pow(magY,2))
-	if (magX == 0) {
+
+	if (magX == 0 || Number.isNaN(magX)) {
 		angle = 0
 	} else {
 		angle = Math.atan(magY / magX)
