@@ -159,7 +159,7 @@ function deviceOrientationListener(event) {
 
       var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
 
-       ctx.fillText("Distance: " + distance ,10,20);
+       ctx.fillText("Distance: " + distance ,10,60);
 
        if (distance < 60) {
          document.getElementById('parrot').style = 'display: block;'
