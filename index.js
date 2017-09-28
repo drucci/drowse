@@ -6,6 +6,12 @@ var app = express()
 var magnitude = 0;
 var direction = 0;
 
+var count = 100;
+
+var magX = 0;
+var magY = 0;
+
+
 app.set('port', (process.env.PORT || 5000))
 app.use(bodyParser.raw())
 app.use(express.static(__dirname + '/public'))
@@ -19,18 +25,25 @@ app.get('/current', function(request, response) {
 })
 
 function getCurrent() {
-return {"direction": direction, magnitude: magnitude}
-
+	return {"direction": direction, magnitude: magnitude}
 }
 
 app.post('/', function(request, response) {
 	console.log(request)
 
-	direction = direction - parseInt(request.query.oldDirection)
-	magnitude = magnitude - parseInt(request.query.oldMag)
-	
-	direction = direction + parseInt(request.query.direction)
-	magnitude = magnitude + parseInt(request.query.magnitude)
+	newMagX =  (request.query.magnitude * Math.cos(request.query.direction)) / count;
+	magX += newMagX
+	oldMagX =  (request.query.oldMag * Math.cos(request.query.oldDirection)) / count;
+	magX -= oldMagX
+
+	newMagY =  (request.query.magnitude * Math.sin(request.query.direction)) / count;
+	magY += newMagY
+	oldMagY =  (request.query.oldMag * Math.sin(request.query.oldDirection)) / count;
+	magY -= oldMagY
+
+
+	magnitude = Math.sqrt(Math.pow(magX,2) + Math.pow(magY,2))
+	direction = Math.atan(magY/magX)
 
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.direction)
