@@ -33,6 +33,9 @@ function getCurrent() {
 
 app.get('/send', function(request, response) {
 	console.log(request)
+	if (request.query.oldAngle == undefined || request.query.oldAngle == null || request.query.oldMagnitude ==undefined || request.query.oldMagnitude == null ) {
+			response.send(getCurrent())
+	}
 
 	ident = request.query.clientId
 	if (!seen.has(ident)) {
@@ -43,6 +46,7 @@ app.get('/send', function(request, response) {
 
 	newMagX =  (request.query.magnitude * Math.cos(request.query.angle)) / count;
 	magX += newMagX
+
 	oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
 	magX -= oldMagX
 
@@ -58,7 +62,7 @@ app.get('/send', function(request, response) {
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.angle)
 	console.log("inputed Old magnitude " + request.query.oldMagnitude)
-	console.log("inputed Old magnitude " + request.query.oldAngle)
+	console.log("inputed Old angle " + request.query.oldAngle)
 
 	console.log("new direction " + angle)
 	console.log("new magnitude " + magnitude)
