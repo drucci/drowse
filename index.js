@@ -3,12 +3,12 @@ var bodyParser = require('body-parser')
 
 var app = express()
 
-var magnitude = 0;
-var angle = 0;
+var magnitude = 1;
+var angle = 1;
 
-var count = 0;
-var magX = 0;
-var magY = 0;
+var count = 1;
+var magX = 1;
+var magY = 1;
 
 
 var seen = new Set()
@@ -26,7 +26,7 @@ app.get('/current', function(request, response) {
 })
 
 function getCurrent() {
-	return {"direction": angle, magnitude: magnitude}
+	return {"angle": angle, magnitude: magnitude}
 }
 
 app.get('/send', function(request, response) {
@@ -41,12 +41,12 @@ app.get('/send', function(request, response) {
 
 	newMagX =  (request.query.magnitude * Math.cos(request.query.angle)) / count;
 	magX += newMagX
-	oldMagX =  (request.query.oldMag * Math.cos(request.query.oldDirection)) / count;
+	oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
 	magX -= oldMagX
 
 	newMagY =  (request.query.magnitude * Math.sin(request.query.angle)) / count;
 	magY += newMagY
-	oldMagY =  (request.query.oldMag * Math.sin(request.query.oldDirection)) / count;
+	oldMagY =  (request.query.oldMagnitude * Math.sin(request.query.oldAngle)) / count;
 	magY -= oldMagY
 
 
@@ -56,7 +56,7 @@ app.get('/send', function(request, response) {
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.angle)
 	console.log("inputed magnitude " + request.query.magnitude)
-	console.log("new direction " + direction)
+	console.log("new direction " + angle)
 	console.log("new magnitude " + magnitude)
 	response.send(getCurrent())
 })
