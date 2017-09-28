@@ -34,6 +34,9 @@ var globalMagnitudeToSend = Math.random() * 200;
 var prevAngle;
 var prevMagnitude;
 
+var totalMagnitude;
+var totalAngle;
+
 function send() {
   var request = new XMLHttpRequest();
   request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}&oldAngle=${prevAngle}&oldMagnitude=${prevMagnitude}`, true);
@@ -41,7 +44,18 @@ function send() {
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       // Success!
-      var resp = request.responseText;
+
+      try {
+        var resp = JSON.parse(request.responseText);
+        console.log(`resp`, resp);
+
+        if (resp.angle != null && resp.magnitude != null) {
+          totalAngle = resp.angle;
+          totalMagnitude = resp.magnitude;
+        }
+      } catch (e) {
+
+      }
     } else {
       // We reached our target server, but it returned an error
 
