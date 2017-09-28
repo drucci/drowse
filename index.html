@@ -125,8 +125,9 @@ function deviceOrientationListener(event) {
 
 
      var angle = -1 * event.alpha * 1/180 * Math.PI - (.5 * Math.PI);
+     var sourceRadians = event.alpha * 1/180 * Math.PI;
      prevAngle = globalAngleToSend;
-     globalAngleToSend = angle;
+     globalAngleToSend = sourceRadians;
     //  console.log(`event.alpha`, event.alpha);
     //  console.log(`angle`, angle);
 
@@ -142,6 +143,9 @@ function deviceOrientationListener(event) {
      canvasArrow(ctx, midX, midY, toX, toY, magnitude);
      ctx.stroke();
 
+     ctx.fillText("Angle sent: " + sourceRadians ,10,20);
+     ctx.fillText("Magnitude sent: " + magnitude ,10,40);
+
      if (totalAngle != null && totalMagnitude != null) {
 
        var totalX = midX + magnitude * Math.cos(totalAngle - (.5 * Math.PI));
@@ -155,7 +159,7 @@ function deviceOrientationListener(event) {
 
       var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
 
-       ctx.fillText("Distance:" + distance ,10,20);
+       ctx.fillText("Distance: " + distance ,10,20);
 
        if (distance < 60) {
          document.getElementById('parrot').style = 'display: block;'
