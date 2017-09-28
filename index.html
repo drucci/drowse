@@ -148,9 +148,12 @@ function deviceOrientationListener(event) {
 
      if (totalAngle != null && totalMagnitude != null) {
 
-       var totalX = midX + totalMagnitude * Math.cos(totalAngle);
-       var totalY = midY + totalMagnitude * Math.sin(totalAngle);
 
+       var modTotalAngle = -1 * totalAngle * 1/180 * Math.PI - (.5 * Math.PI);
+       console.log(`modTotalAngle`, modTotalAngle);
+
+       var totalX = midX + totalMagnitude * Math.cos(modTotalAngle);
+       var totalY = midY + totalMagnitude * Math.sin(modTotalAngle);
 
        ctx.beginPath();
        ctx.strokeStyle="#cccc";
