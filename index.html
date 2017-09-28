@@ -18,6 +18,12 @@ html, body {
   top: 100px;
 }
 
+#sproket-img {
+  position: absolute;
+  left: 300px;
+  top: 10px;
+}
+
 </style>
 
 <canvas id="myCanvas" width="375" height="677" style="border:1px solid black;"></canvas>
@@ -115,9 +121,9 @@ function deviceOrientationListener(event) {
     //  alert('ctx.canvas.height: ', ctx.canvas.height);
 
      ctx.clearRect(0,0, c.width, c.height);
-    //  ctx.fillStyle="#ff8f59";
+     ctx.fillStyle="#ff8f59";
 
-     ctx.font="14px Verdana";
+     ctx.font="18px Verdana";
 
     //180
      var magnitude = event.beta / 30 * 180;
@@ -146,8 +152,9 @@ function deviceOrientationListener(event) {
      canvasArrow(ctx, midX, midY, toX, toY, magnitude);
      ctx.stroke();
 
-     ctx.fillText("Angle sent: " + sourceRadians ,10,20);
-     ctx.fillText("Magnitude sent: " + magnitude ,10,40);
+     ctx.fillText("SpotProduct", 10, 20);
+    //  ctx.fillText("Angle sent: " + sourceRadians ,10,20);
+    //  ctx.fillText("Magnitude sent: " + magnitude ,10,40);
 
     //  totalAngle = event.alpha;
     //  totalMagnitude = magnitude;
@@ -173,7 +180,7 @@ function deviceOrientationListener(event) {
 
       var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
 
-       ctx.fillText("Distance: " + distance ,10,60);
+      //  ctx.fillText("Distance: " + distance ,10,60);
 
        if (distance < 40) {
          document.getElementById('parrot').style = 'display: block;'
@@ -206,5 +213,7 @@ else {
 </script>
 
 <img id=parrot src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif" width=300 height=300 style="display: none"/>
+
+<img id="sproket-img" src="http://philly.hubspotusergroups.com/hubfs/Logo/hubspot-sprocket-logo.png" height=64 style=""/>
 </body>
 </html>
