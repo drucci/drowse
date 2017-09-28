@@ -14,6 +14,9 @@ app.get('/', function(request, response) {
   response.send('Hello World!' + mag + " direction: "+ direction);
 })
 
+app.get('/current', function(request, response) {
+  response.send({"direction": direction, magnitude: magnitude});
+})
 
 app.post('/', function(request, response) {
 	console.log(request)
@@ -24,15 +27,11 @@ app.post('/', function(request, response) {
 	direction = direction + parseInt(request.query.direction)
 	mag = mag + parseInt(request.query.mag)
 
-
 	console.log("inputed magnitude " + request.query.mag)
-
 	console.log("inputed direction " + request.query.direction)
 	console.log("inputed magnitude " + request.query.mag)
-
 	console.log("new direction " + direction)
 	console.log("new magnitude " + mag)
-
 
 })
 
