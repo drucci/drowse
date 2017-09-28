@@ -40,8 +40,9 @@ function getCurrent() {
 
 app.get('/send', function(request, response) {
 	if (Number.isNaN(request.query.oldAngle) 
-		|| Number.isNaN(request.query.oldMagnitude)) {
-		
+		|| Number.isNaN(request.query.oldMagnitude) 
+		||Number.isNaN(request.query.magnitude)
+		|| Number.isNan(request.query.angle)) {
 		response.send(getCurrent());
 		return;
 	}
@@ -65,7 +66,7 @@ app.get('/send', function(request, response) {
 	magY -= oldMagY
 
 
-	magnitude = Math.sqrt(Math.pow(magX,2) + Math.pow(magY,2))
+	magnitude = Math.sqrt(Math.pow(magX, 2) + Math.pow(magY, 2))
 
 	if (magX == 0 || Number.isNaN(magX)) {
 		angle = 0
