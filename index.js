@@ -28,6 +28,13 @@ app.get('/current', function(request, response) {
 })
 
 function getCurrent() {
+	if (angle == null ) {
+		angle = 0;
+	}
+
+	if (magnitude == null) {
+		magnitude = 0;
+	}
 	return {"angle": angle, magnitude: magnitude}
 }
 
@@ -59,7 +66,11 @@ app.get('/send', function(request, response) {
 
 
 	magnitude = Math.sqrt(Math.pow(magX,2) + Math.pow(magY,2))
-	angle = Math.atan(magY/magX)
+	if (magX == 0) {
+		angle = 0
+	} else {
+		angle = Math.atan(magY / magX)
+	}
 
 	console.log("inputed magnitude " + request.query.magnitude)
 	console.log("inputed direction " + request.query.angle)
@@ -68,6 +79,7 @@ app.get('/send', function(request, response) {
 
 	console.log("new direction " + angle)
 	console.log("new magnitude " + magnitude)
+
 	response.send(getCurrent())
 })
 
