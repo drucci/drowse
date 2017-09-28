@@ -52,24 +52,28 @@ app.get('/send', function(request, response) {
 		return;
 	}
 	ident = request.query.clientId
-
+	var isNew = false;
 	if (!seen.has(ident)) {
 		seen.add(ident)
 		count += 1
-		console.log("NEW IDENTFIER, INCREASING COUNT")
+		console.log("NEW IDENTFIER, INCREASING COUNT");
+		isNew = true;
 	}
 
 	newMagX =  (request.query.magnitude * Math.cos(request.query.angle)) / count;
 	magX += newMagX
 
-	oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
-	magX -= oldMagX
-
+	if (!isNew) {
+		oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
+		magX -= oldMagX
+	}
 	newMagY =  (request.query.magnitude * Math.sin(request.query.angle)) / count;
 	magY += newMagY
-	oldMagY =  (request.query.oldMagnitude * Math.sin(request.query.oldAngle)) / count;
-	magY -= oldMagY
 
+	if (!isNew) {
+		oldMagY =  (request.query.oldMagnitude * Math.sin(request.query.oldAngle)) / count;
+		magY -= oldMagY
+	}
 
 	magnitude = Math.sqrt(Math.pow(magX, 2) + Math.pow(magY, 2))
 
