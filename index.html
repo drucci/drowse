@@ -161,6 +161,8 @@ function deviceOrientationListener(event) {
        var modTotalAngle = totalAngle;
        console.log(`modTotalAngle`, modTotalAngle);
 
+       totalMagnitude = Math.min(totalMagnitude, 180);
+
        var totalX = midX + totalMagnitude * Math.cos(modTotalAngle);
        var totalY = midY + totalMagnitude * Math.sin(modTotalAngle);
 
