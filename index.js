@@ -81,6 +81,10 @@ app.get('/send', function(request, response) {
 	console.log("inputed Old magnitude " + request.query.oldMagnitude)
 	console.log("inputed Old angle " + request.query.oldAngle)
 
+	console.log("current unique users"  + count)
+	console.log("magX: "+ magX)
+	console.log("magY:" + magY)
+
 	console.log("new direction " + angle)
 	console.log("new magnitude " + magnitude)
 
