@@ -51,52 +51,52 @@ app.get('/send', function(request, response) {
 		response.send(getCurrent());
 			return;
 	}
-	ident = request.query.clientId
+	ident = request.query.clientId;
 	var isNew = false;
 	if (!seen.has(ident)) {
-		seen.add(ident)
-		count = seen.size
+		seen.add(ident);
+		count = seen.size;
 		console.log("NEW IDENTFIER, INCREASING COUNT");
 		isNew = true;
 	}
 
 	newMagX =  (request.query.magnitude * Math.cos(request.query.angle)) / count;
-	magX += newMagX
+	magX += newMagX;
 
 	if (!isNew) {
 		oldMagX =  (request.query.oldMagnitude * Math.cos(request.query.oldAngle)) / count;
-		magX -= oldMagX
+		magX -= oldMagX;
 	}
 
 	newMagY =  (request.query.magnitude * Math.sin(request.query.angle)) / count;
-	magY += newMagY
+	magY += newMagY;
 
 	if (!isNew) {
 		oldMagY =  (request.query.oldMagnitude * Math.sin(request.query.oldAngle)) / count;
-		magY -= oldMagY
+		magY -= oldMagY;
 	}
 
-	magnitude = Math.sqrt(Math.pow(magX, 2) + Math.pow(magY, 2))
+	magnitude = Math.sqrt(Math.pow(magX, 2) + Math.pow(magY, 2));
 
 	if (magX == 0 || Number.isNaN(magX)) {
-		angle = 0
+		angle = 0;
 	} else {
-		angle = Math.atan(magY / magX)
+		angle = Math.atan(magY / magX);
 	}
 
-	console.log("inputed magnitude " + request.query.magnitude)
-	console.log("inputed direction " + request.query.angle)
-	console.log("inputed Old magnitude " + request.query.oldMagnitude)
-	console.log("inputed Old angle " + request.query.oldAngle)
+	console.log("inputed magnitude " + request.query.magnitude);
+	console.log("inputed direction " + request.query.angle);
+	console.log("inputed Old magnitude " + request.query.oldMagnitude);
+	console.log("inputed Old angle " + request.query.oldAngle);
 
-	console.log("current unique users"  + count)
-	console.log("magX: "+ magX)
-	console.log("magY:" + magY)
+	console.log("current unique users"  + count);
+	console.log("magX: "+ magX);
+	console.log("magY:" + magY);
 
-	console.log("new direction " + angle)
-	console.log("new magnitude " + magnitude)
+	console.log("new direction " + angle);
+	console.log("new magnitude " + magnitude);
 
-	response.send(getCurrent())
+	response.send(getCurrent());
 })
 
 app.listen(app.get('port'), function() {
