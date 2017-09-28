@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0px;
+}
+
+#parrot {
+  position: absolute;
+  left: 50px;
+  top: 100px;
+}
+
+</style>
+
+<canvas id="myCanvas" width="375" height="677" style="border:1px solid black;"></canvas>
+
+<script>
+
+var firstDraw = false;
+var midX = 375 / 2;
+var midY = 677 / 2;
+
+var fakeClientId = Math.random() * 2000000000;
+var globalAngleToSend = Math.random() * 360
+var globalMagnitudeToSend = Math.random() * 200;
+var prevAngle;
+var prevMagnitude;
+
+function send() {
+  var request = new XMLHttpRequest();
+  request.open('GET', `http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}`, true);
+
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      // Success!
+      var resp = request.responseText;
+    } else {
+      // We reached our target server, but it returned an error
+
+    }
+  };
+
+  request.onerror = function() {
+    // There was a connection error of some sort
+  };
+
+  request.send();
+}
+
+  send();
+setInterval(function() {
+  // (`http://spotproduct.herokuapp.com/send?angle=${globalAngleToSend}&magnitude=${globalMagnitudeToSend}&clientId=${fakeClientId}`);
+  send();
+}, 3000);
+
+function distanceBetween(x1, y1, x2, y2) {
+  var a = x1 - x2;
+  var b = y1 - y2;
+
+  return Math.sqrt( a*a + b*b );
+}
+
+function canvasArrow(ctx, fromx, fromy, tox, toy, magnitude){
+  var headlen = 50 * magnitude/200;
+  var angleForArrow = Math.atan2(toy-fromy,tox-fromx);
+
+ ctx.moveTo(midX, midY);
+ ctx.lineWidth = 10;
+  ctx.lineCap="round";
+  ctx.moveTo(fromx, fromy);
+  ctx.lineTo(tox, toy);
+  ctx.lineTo(tox-headlen*Math.cos(angleForArrow-Math.PI/6),toy-headlen*Math.sin(angleForArrow-Math.PI/6));
+  ctx.moveTo(tox, toy);
+  ctx.lineTo(tox-headlen*Math.cos(angleForArrow+Math.PI/6),toy-headlen*Math.sin(angleForArrow+Math.PI/6));
+}
+
+function deviceOrientationListener(event) {
+     var c=document.getElementById("myCanvas");
+     var ctx=c.getContext("2d");
+
+    //  ctx.canvas.width  = window.innerWidth;
+    //  ctx.canvas.height = window.innerHeight;
+
+    //  if (firstDraw) () {
+    //    ctx.redraw();
+    //  }
+
+    //  alert('ctx.canvas.height: ', ctx.canvas.height);
+
+     ctx.clearRect(0,0, c.width, c.height);
+    //  ctx.fillStyle="#ff8f59";
+
+     ctx.font="14px Verdana";
+
+    //180
+     var magnitude = event.beta / 30 * 180;
+    //  var magnitude = Math.min(Math.max(event.beta, 90), 0) / 30 * 180;
+     magnitude = Math.max(40, magnitude);
+     magnitude = Math.min(180, magnitude);
+
+     prevMagnitude = globalMagnitudeToSend;
+     globalMagnitudeToSend = magnitude;
+
+
+     var angle = -1 * event.alpha * 1/180 * Math.PI - (.5 * Math.PI);
+     prevAngle = globalAngleToSend;
+     globalAngleToSend = angle;
+    //  console.log(`event.alpha`, event.alpha);
+    //  console.log(`angle`, angle);
+
+     var toX = midX + magnitude * Math.cos(angle);
+     var toY = midY + magnitude * Math.sin(angle);
+
+     var totalX = midX + magnitude * Math.cos(angle - (.5 * Math.PI));
+     var totalY = midY + magnitude * Math.sin(angle - (.5 * Math.PI));
+
+
+    //  ctx.lineTo(210, 75);
+    //  ctx.lineTo(toX, toY);
+
+     ctx.beginPath();
+     ctx.strokeStyle="#ff8f59";
+     canvasArrow(ctx, midX, midY, toX, toY, magnitude);
+     ctx.stroke();
+
+     ctx.beginPath();
+     ctx.strokeStyle="#cccc";
+     canvasArrow(ctx, midX, midY, totalX, totalY);
+     ctx.stroke();
+
+    //  ctx.arc(180,75,60,0, event.alpha*Math.PI/180);
+
+    var distance = Math.abs(distanceBetween(toX, toY, totalX, totalY));
+
+     ctx.fillText("Distance:" + distance ,10,20);
+
+     if (distance < 60) {
+       document.getElementById('parrot').style = 'display: block;'
+     } else {
+       document.getElementById('parrot').style = 'display: none;'
+     }
+
+
+    //  ctx.fill();
+
+   //   ctx.fillStyle="#FF6600";
+   //   ctx.fillText("Beta:" + Math.round(event.beta),10,140);
+   //   ctx.beginPath();
+   //   ctx.fillRect(180, 150, event.beta, 90);
+   //
+   //   ctx.fillStyle="#FF0000";
+   //   ctx.fillText("Gamma:" + Math.round(event.gamma),10,270);
+   //   ctx.beginPath();
+   //   ctx.fillRect(90, 340, 180, event.gamma);
+}
+
+if (window.DeviceOrientationEvent) {
+   window.addEventListener("deviceorientation", deviceOrientationListener);
+}
+else {
+    alert("Your browser doesn't support Device Orientation. Get out you useless NULL VECTOR!");
+}
+
+</script>
+
+<img id=parrot src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif" width=300 height=300 style="display: none"/>
+</body>
+</html>
